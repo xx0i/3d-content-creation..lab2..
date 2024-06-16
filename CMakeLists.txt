@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(PROJECT_NAME Vulkan_Lab_One)
+set(PROJECT_NAME Vulkan_Lab_Two)
 project(${PROJECT_NAME})
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
