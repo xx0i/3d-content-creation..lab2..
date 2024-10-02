@@ -1,7 +1,7 @@
 // minimalistic code to draw a single triangle, this is not part of the API.
 #include "shaderc/shaderc.h" // needed for compiling shaders at runtime
 #ifdef _WIN32 // must use MT platform DLL libraries on windows
-	#pragma comment(lib, "shaderc_combined.lib") 
+#pragma comment(lib, "shaderc_combined.lib") 
 #endif
 
 void PrintLabeledDebugString(const char* label, const char* toPrint)
@@ -57,7 +57,7 @@ public:
 		BindShutdownCallback();
 	}
 
-	private:
+private:
 	void UpdateWindowDimensions()
 	{
 		win.GetClientWidth(windowWidth);
@@ -85,25 +85,27 @@ public:
 	{
 		// TODO: Part 1b
 		float verts[] = {
-			//0,   0.5f,
-			//0.5f, -0.5f,
-			//-0.5f, -0.5f,
-			//0,   0.5f
-			-0.25, 0.75,
-			0.25, 0.75,
-			/*0.25, 0.25,
-			0.75, 0.25,
-			0.75, -0.25,
-			0.25, -0.25,
-			0.25, -0.75,
-			-0.25, -0.75,
-			-0.25, -0.25,
-			-0.75, -0.25,
-			-0.75, 0.25,
-			-0.25, 0.25,			
-			- 0.25, 0.75,*/
+			0,   0.5f,
+			0.5f, -0.5f,
+			-0.5f, -0.5f,
+			0,   0.5f
 		};
 		// TODO: Part 1c
+		//float verts[] = {
+		//	-0.25f, 0.75f,
+		//	0.25f, 0.75f,
+		//	0.25f, 0.25f,
+		//	0.75f, 0.25f,
+		//	0.75f, -0.25f,
+		//	0.25f, -0.25f,
+		//	0.25f, -0.75f,
+		//	-0.25f, -0.75f,
+		//	-0.25f, -0.25f,
+		//	-0.75f, -0.25f,
+		//	-0.75f, 0.25f,
+		//	-0.25f, 0.25f,
+		//	-0.25f, 0.75f
+		//};
 		// TODO: Part 4a
 		CreateVertexBuffer(&verts[0], sizeof(verts));
 	}
@@ -127,7 +129,7 @@ public:
 
 		CompileVertexShader(compiler, options);
 		CompileFragmentShader(compiler, options);
-		
+
 		// Free runtime shader compiler resources
 		shaderc_compile_options_release(options);
 		shaderc_compiler_release(compiler);
@@ -141,7 +143,7 @@ public:
 #ifndef NDEBUG
 		shaderc_compile_options_set_generate_debug_info(retval);
 #endif
-	return retval;
+		return retval;
 	}
 
 	void BindShutdownCallback()
@@ -210,7 +212,7 @@ public:
 		stage_create_info[1].module = fragmentShader; // TODO: Part 4f, Part 4g
 		stage_create_info[1].pName = "main";
 
-	
+
 		VkPipelineInputAssemblyStateCreateInfo assembly_create_info = CreateVkPipelineInputAssemblyStateCreateInfo();
 		VkVertexInputBindingDescription vertex_binding_description = CreateVkVertexInputBindingDescription();
 
@@ -232,10 +234,10 @@ public:
 		VkPipelineColorBlendAttachmentState color_blend_attachment_state = CreateVkPipelineColorBlendAttachmentState();
 		VkPipelineColorBlendStateCreateInfo color_blend_create_info = CreateVkPipelineColorBlendStateCreateInfo(&color_blend_attachment_state, 1);
 
-		VkDynamicState dynamic_states[2] = 
+		VkDynamicState dynamic_states[2] =
 		{
 			// By setting these we do not need to re-create the pipeline on Resize
-			VK_DYNAMIC_STATE_VIEWPORT, 
+			VK_DYNAMIC_STATE_VIEWPORT,
 			VK_DYNAMIC_STATE_SCISSOR
 		};
 
@@ -289,7 +291,7 @@ public:
 	}
 
 	VkPipelineVertexInputStateCreateInfo CreateVkPipelineVertexInputStateCreateInfo(
-	VkVertexInputBindingDescription* bindingDescriptions, uint32_t bindingCount,
+		VkVertexInputBindingDescription* bindingDescriptions, uint32_t bindingCount,
 		VkVertexInputAttributeDescription* attributeDescriptions, uint32_t attributeCount)
 	{
 		VkPipelineVertexInputStateCreateInfo retval = {};
