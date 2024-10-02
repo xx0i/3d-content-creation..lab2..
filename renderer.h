@@ -153,7 +153,7 @@ private:
 			10, 11, 8,
 			20, 8, 9, 
 			11, 2, 5,
-			11, 5, 0
+			11, 5, 8
 		};
 		// TODO: Part 4a
 		CreateIndexBuffer(&triangles[0], sizeof(triangles));
