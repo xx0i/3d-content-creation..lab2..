@@ -44,6 +44,7 @@ class Renderer
 	GW::MATH::GMATRIXF zRotationMatrix;
 	GW::MATH::GMatrix interfaceProxy;
 	// TODO: Part 2b
+	std::chrono::high_resolution_clock::time_point startTime;
 	struct shaderVars 
 	{
 		GW::MATH::GMATRIXF worldMatrix; //64 bytes?
@@ -63,6 +64,8 @@ public:
 		UpdateWindowDimensions();
 		InitializeGraphics();
 		BindShutdownCallback();
+		interfaceProxy.Create();
+		startTime = std::chrono::high_resolution_clock::now();
 		
 	}
 
@@ -76,7 +79,6 @@ private:
 	void InitializeGraphics()
 	{
 		// TODO: Part 2a
-		interfaceProxy.Create();
 		GetHandlesFromSurface();
 		InitializeVertexBuffer();
 		// TODO: Part 3c 
@@ -468,7 +470,6 @@ private:
 	}
 
 public:
-	std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
 	void Render()
 	{
 		// TODO: Part 2a
