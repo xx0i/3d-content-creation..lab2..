@@ -143,17 +143,17 @@ private:
 
 	void InitializeVertexBufferTriangle()
 	{
-		uint32_t triangles[] = {
+		uint16_t triangles[] = {
 			0, 1, 2,
-			0, 2, 11,
-			2, 3, 4,
-			2, 4, 5,
-			8, 5, 6,
-			8, 6, 7,
-			10, 11, 8,
-			20, 8, 9, 
-			11, 2, 5,
-			11, 5, 8
+			//0, 2, 11,
+			//2, 3, 4,
+			//2, 4, 5,
+			//8, 5, 6,
+			//8, 6, 7,
+			//10, 11, 8,
+			//20, 8, 9, 
+			//11, 2, 5,
+			//11, 5, 8
 		};
 		// TODO: Part 4a
 		CreateIndexBuffer(&triangles[0], sizeof(triangles));
@@ -544,7 +544,7 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDraw(commandBuffer, 30, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 3, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
@@ -577,7 +577,7 @@ private:
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, trianglePipeline); // TODO: Part 4g
 		// TODO: Part 2d
 		vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(shaderVars), &shaderData);
-		vkCmdBindIndexBuffer(commandBuffer, triangleHandle, 0, VK_INDEX_TYPE_UINT32);
+		vkCmdBindIndexBuffer(commandBuffer, triangleHandle, 0, VK_INDEX_TYPE_UINT16);
 	}
 
 	void SetScissor(const VkCommandBuffer& commandBuffer)
