@@ -89,7 +89,7 @@ private:
 		GetHandlesFromSurface();
 		InitializeVertexBuffer();
 		// TODO: Part 3c 
-
+		InitializeVertexBufferTriangle();
 		CompileShaders();
 		InitializeGraphicsPipeline();
 	}
@@ -140,6 +140,33 @@ private:
 	}
 
 
+
+	void InitializeVertexBufferTriangle()
+	{
+		uint32_t triangles[] = {
+			0, 1, 2,
+			0, 2, 11,
+			2, 3, 4,
+			2, 4, 5,
+			8, 5, 6,
+			8, 6, 7,
+			10, 11, 8,
+			20, 8, 9, 
+			11, 2, 5,
+			11, 5, 8
+		};
+		// TODO: Part 4a
+		CreateIndexBuffer(&triangles[0], sizeof(triangles));
+	}
+
+	void CreateIndexBuffer(const void* data, unsigned int sizeInBytes)
+	{
+		// Transfer triangle data to the vertex buffer. (staging would be prefered here)
+		GvkHelper::create_buffer(physicalDevice, device, sizeInBytes,
+			VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &triangleHandle, &triangleData);
+		GvkHelper::write_to_buffer(device, triangleData, data, sizeInBytes);
+	}
 
 	void CompileShaders()
 	{
@@ -517,7 +544,8 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdBindIndexBuffer(commandBuffer, triangleHandle, 0, VK_INDEX_TYPE_UINT32);
+		vkCmdDraw(commandBuffer, 10, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
