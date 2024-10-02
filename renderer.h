@@ -462,7 +462,7 @@ public:
 		SetUpPipeline(commandBuffer);
 		// TODO: Part 3b
 		// TODO: Part 3d
-		vkCmdDraw(commandBuffer, 2, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 4, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
