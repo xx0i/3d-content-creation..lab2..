@@ -273,7 +273,7 @@ private:
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		retval.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP; // TODO: Part 1b
+		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP; // TODO: Part 1b
 		retval.primitiveRestartEnable = false;
 
 		return retval;
