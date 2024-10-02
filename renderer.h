@@ -145,7 +145,7 @@ private:
 	{
 		uint16_t triangles[] = {
 			0, 1, 2,
-			//0, 2, 11,
+			0, 2, 11,
 			//2, 3, 4,
 			//2, 4, 5,
 			//8, 5, 6,
@@ -544,7 +544,7 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDraw(commandBuffer, 3, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 6, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
