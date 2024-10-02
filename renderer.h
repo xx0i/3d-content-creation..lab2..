@@ -56,6 +56,9 @@ class Renderer
 	VkPipeline trianglePipeline = nullptr;
 	
 	// TODO: Part 3c
+	VkBuffer triangleHandle = nullptr;
+	VkDeviceMemory triangleData = nullptr;
+
 	// TODO: Part 4a
 	// TODO: Part 4b
 
@@ -86,6 +89,7 @@ private:
 		GetHandlesFromSurface();
 		InitializeVertexBuffer();
 		// TODO: Part 3c 
+
 		CompileShaders();
 		InitializeGraphicsPipeline();
 	}
@@ -133,6 +137,35 @@ private:
 			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
 			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &vertexHandle, &vertexData);
 		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes);
+	}
+
+
+	//for part 3c
+	void InitializeVertexBufferTriangle()
+	{
+		float triangles[] = {
+			-0.25f, 0.75f, 0.25f, 0.75f, -0.25f, 0.25f,
+			-0.25f, 0.25f, 0.25f, 0.75f, 0.25f, 0.25f,
+			0.25f, 0.25f, 0.75f, 0.25f, 0.75f, -0.25f,
+			0.75f, -0.25f, 0.25f, -0.25f, 0.25f, 0.25f,
+			0.25f, -0.25f, 0.25f, -0.75f, -0.25f, -0.75f,
+			-0.25f, -0.75f, -0.25f, -0.25f,	0.25f, -0.25f,
+			-0.25f, -0.25f, - 0.75f, -0.25f, - 0.75f, 0.25f,
+			-0.75f, 0.25f, -0.25f, 0.25f, -0.25f, -0.25f,
+			-0.25f, 0.25f, 0.25f, 0.25f, 0.25f, -0.25f,
+			0.25f, -0.25f, -0.25f, -0.25f, -0.25f, 0.25f
+		};
+		// TODO: Part 4a
+		CreateVertexBufferTriangle(&triangles[0], sizeof(triangles));
+	}
+
+	void CreateVertexBufferTriangle(const void* data, unsigned int sizeInBytes)
+	{
+		// Transfer triangle data to the vertex buffer. (staging would be prefered here)
+		GvkHelper::create_buffer(physicalDevice, device, sizeInBytes,
+			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &triangleHandle, &triangleData);
+		GvkHelper::write_to_buffer(device, triangleData, data, sizeInBytes);
 	}
 
 
@@ -506,12 +539,15 @@ public:
 
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipeline(commandBuffer, rotation);
-		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 30, 1, 0, 0); // TODO: Part 1b, Part 1c
+		
 		// TODO: Part 3b
 		commandBuffer = GetCurrentCommandBuffer();
+		vkCmdBindIndexBuffer(commandBuffer, triangleHandle, 0, VK_INDEX_TYPE_UINT16);
 		SetUpPipelineTriangle(commandBuffer, rotation);
+		
 		// TODO: Part 3d
-		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDrawIndexed(commandBuffer, 13, 1, 0, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
@@ -579,6 +615,8 @@ private:
 		// TODO: Part 3a
 		vkDestroyPipeline(device, trianglePipeline, nullptr);
 		// TODO: Part 3c
+		vkDestroyBuffer(device, triangleHandle, nullptr);
+		vkFreeMemory(device, triangleData, nullptr);
 		// TODO: Part 4b
 	}
 };
