@@ -544,7 +544,7 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDraw(commandBuffer, 10, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 12, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
