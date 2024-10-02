@@ -383,7 +383,7 @@ private:
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		retval.rasterizerDiscardEnable = VK_FALSE;
-		retval.polygonMode = VK_POLYGON_MODE_FILL; //changed to line from default (fill) for 1b
+		retval.polygonMode = VK_POLYGON_MODE_FILL;
 		retval.lineWidth = 1.0f;
 		retval.cullMode = VK_CULL_MODE_BACK_BIT;
 		retval.frontFace = VK_FRONT_FACE_CLOCKWISE;
@@ -507,8 +507,8 @@ public:
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipeline(commandBuffer, rotation);
 		// TODO: Part 3b
-		commandBuffer = GetCurrentCommandBuffer();
-		SetUpPipelineTriangle(commandBuffer, rotation);
+		//commandBuffer = GetCurrentCommandBuffer();
+		//SetUpPipelineTriangle(commandBuffer, rotation);
 		// TODO: Part 3d
 		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
