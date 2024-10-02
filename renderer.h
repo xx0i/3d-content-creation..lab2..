@@ -85,10 +85,12 @@ public:
 	{
 		// TODO: Part 1b
 		float verts[] = {
-			0,   0.5f,
-			0.5f, -0.5f,
-			-0.5f, -0.5f,
-			0,   0.5f
+			//0,   0.5f,
+			//0.5f, -0.5f,
+			//-0.5f, -0.5f,
+			//0,   0.5f
+			-0.25, 0.75,
+			0.25, 0.75
 		};
 		// TODO: Part 1c
 		// TODO: Part 4a
@@ -335,7 +337,7 @@ public:
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		retval.rasterizerDiscardEnable = VK_FALSE;
-		retval.polygonMode = VK_POLYGON_MODE_LINE;
+		retval.polygonMode = VK_POLYGON_MODE_LINE; //changed to line from default (fill) for 1b
 		retval.lineWidth = 1.0f;
 		retval.cullMode = VK_CULL_MODE_BACK_BIT;
 		retval.frontFace = VK_FRONT_FACE_CLOCKWISE;
