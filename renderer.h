@@ -335,7 +335,7 @@ public:
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		retval.rasterizerDiscardEnable = VK_FALSE;
-		retval.polygonMode = VK_POLYGON_MODE_FILL;
+		retval.polygonMode = VK_POLYGON_MODE_LINE;
 		retval.lineWidth = 1.0f;
 		retval.cullMode = VK_CULL_MODE_BACK_BIT;
 		retval.frontFace = VK_FRONT_FACE_CLOCKWISE;
