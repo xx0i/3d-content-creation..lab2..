@@ -580,7 +580,7 @@ private:
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, trianglePipeline); // TODO: Part 4g
 		// TODO: Part 2d
 		vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(shaderVars), &shaderData);
-		BindVertexBuffers(commandBuffer);
+		BindVertexBuffersTriangle(commandBuffer);
 	}
 
 	void SetScissor(const VkCommandBuffer& commandBuffer)
@@ -599,6 +599,12 @@ private:
 	{
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, &vertexHandle, offsets);
+	}
+
+	void BindVertexBuffersTriangle(const VkCommandBuffer& commandBuffer)
+	{
+		VkDeviceSize offsets[] = { 0 };
+		vkCmdBindVertexBuffers(commandBuffer, 0, 1, &triangleHandle, offsets);
 	}
 
 	void CleanUp()
