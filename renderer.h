@@ -153,7 +153,7 @@ private:
 			10, 11, 8,
 			20, 8, 9, 
 			11, 2, 5,
-			11, 5, 8
+			11, 5, 0
 		};
 		// TODO: Part 4a
 		CreateIndexBuffer(&triangles[0], sizeof(triangles));
@@ -544,7 +544,7 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDrawIndexed(commandBuffer, 30, 1, 0, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDrawIndexed(commandBuffer, 30, 1, 0, 0, 0);
 		// TODO: Part 4g
 	}
 
