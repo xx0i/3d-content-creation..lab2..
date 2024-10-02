@@ -2,7 +2,7 @@
 [[vk::push_constant]]
 cbuffer shaderVars
 {
-    matrix worldMatrix; //64 bytes?
+    matrix worldMatrix;
     matrix padding;
 };
 // an ultra simple hlsl vertex shader

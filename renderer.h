@@ -43,14 +43,18 @@ class Renderer
 	GW::MATH::GMATRIXF identityMatrix = GW::MATH::GIdentityMatrixF;
 	GW::MATH::GMATRIXF zRotationMatrix;
 	GW::MATH::GMatrix interfaceProxy;
+	
 	// TODO: Part 2b
 	std::chrono::high_resolution_clock::time_point startTime;
 	struct shaderVars 
 	{
-		GW::MATH::GMATRIXF worldMatrix; //64 bytes?
+		GW::MATH::GMATRIXF worldMatrix;
 		GW::MATH::GMATRIXF padding;
 	};
+	
 	// TODO: Part 3a
+	VkPipeline trianglePipeline = nullptr;
+	
 	// TODO: Part 3c
 	// TODO: Part 4a
 	// TODO: Part 4b
@@ -277,6 +281,11 @@ private:
 			&pipeline_create_info, nullptr, &pipeline);
 
 		// TODO: Part 3a
+		VkPipelineInputAssemblyStateCreateInfo assemblyCreateInfo = CreateVkPipelineInputAssemblyStateCreateInfoTriangle();
+
+		pipeline_create_info.pInputAssemblyState = &assemblyCreateInfo;
+		vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1,&pipeline_create_info, nullptr, &trianglePipeline);
+
 		// TODO: Part 4g
 	}
 
@@ -286,6 +295,18 @@ private:
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP; // TODO: Part 1b
+		retval.primitiveRestartEnable = false;
+
+		return retval;
+	}
+
+	//part of 3a
+	VkPipelineInputAssemblyStateCreateInfo CreateVkPipelineInputAssemblyStateCreateInfoTriangle()
+	{
+		VkPipelineInputAssemblyStateCreateInfo retval = {};
+
+		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+		retval.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		retval.primitiveRestartEnable = false;
 
 		return retval;
@@ -486,6 +507,8 @@ public:
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipeline(commandBuffer, rotation);
 		// TODO: Part 3b
+		commandBuffer = GetCurrentCommandBuffer();
+		SetUpPipelineTriangle(commandBuffer, rotation);
 		// TODO: Part 3d
 		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
@@ -507,6 +530,17 @@ private:
 		SetViewport(commandBuffer);
 		SetScissor(commandBuffer);
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline); // TODO: Part 4g
+		// TODO: Part 2d
+		vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(shaderVars), &shaderData);
+		BindVertexBuffers(commandBuffer);
+	}
+
+	void SetUpPipelineTriangle(const VkCommandBuffer& commandBuffer, const shaderVars& shaderData)
+	{
+		UpdateWindowDimensions();
+		SetViewport(commandBuffer);
+		SetScissor(commandBuffer);
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, trianglePipeline); // TODO: Part 4g
 		// TODO: Part 2d
 		vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(shaderVars), &shaderData);
 		BindVertexBuffers(commandBuffer);
@@ -542,6 +576,7 @@ private:
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 		vkDestroyPipeline(device, pipeline, nullptr);
 		// TODO: Part 3a
+		vkDestroyPipeline(device, trianglePipeline, nullptr);
 		// TODO: Part 3c
 		// TODO: Part 4b
 	}
