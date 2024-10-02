@@ -140,35 +140,6 @@ private:
 	}
 
 
-	//for part 3c
-	void InitializeVertexBufferTriangle()
-	{
-		float triangles[] = {
-			-0.25f, 0.75f, 0.25f, 0.75f, -0.25f, 0.25f,
-			-0.25f, 0.25f, 0.25f, 0.75f, 0.25f, 0.25f,
-			0.25f, 0.25f, 0.75f, 0.25f, 0.75f, -0.25f,
-			0.75f, -0.25f, 0.25f, -0.25f, 0.25f, 0.25f,
-			0.25f, -0.25f, 0.25f, -0.75f, -0.25f, -0.75f,
-			-0.25f, -0.75f, -0.25f, -0.25f,	0.25f, -0.25f,
-			-0.25f, -0.25f, - 0.75f, -0.25f, - 0.75f, 0.25f,
-			-0.75f, 0.25f, -0.25f, 0.25f, -0.25f, -0.25f,
-			-0.25f, 0.25f, 0.25f, 0.25f, 0.25f, -0.25f,
-			0.25f, -0.25f, -0.25f, -0.25f, -0.25f, 0.25f
-		};
-		// TODO: Part 4a
-		CreateVertexBufferTriangle(&triangles[0], sizeof(triangles));
-	}
-
-	void CreateVertexBufferTriangle(const void* data, unsigned int sizeInBytes)
-	{
-		// Transfer triangle data to the vertex buffer. (staging would be prefered here)
-		GvkHelper::create_buffer(physicalDevice, device, sizeInBytes,
-			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &triangleHandle, &triangleData);
-		GvkHelper::write_to_buffer(device, triangleData, data, sizeInBytes);
-	}
-
-
 
 	void CompileShaders()
 	{
@@ -539,15 +510,14 @@ public:
 
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipeline(commandBuffer, rotation);
-		vkCmdDraw(commandBuffer, 30, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		
 		// TODO: Part 3b
 		commandBuffer = GetCurrentCommandBuffer();
-		vkCmdBindIndexBuffer(commandBuffer, triangleHandle, 0, VK_INDEX_TYPE_UINT16);
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDrawIndexed(commandBuffer, 13, 1, 0, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
@@ -580,7 +550,7 @@ private:
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, trianglePipeline); // TODO: Part 4g
 		// TODO: Part 2d
 		vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(shaderVars), &shaderData);
-		BindVertexBuffersTriangle(commandBuffer);
+		BindVertexBuffers(commandBuffer);
 	}
 
 	void SetScissor(const VkCommandBuffer& commandBuffer)
@@ -599,12 +569,6 @@ private:
 	{
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, &vertexHandle, offsets);
-	}
-
-	void BindVertexBuffersTriangle(const VkCommandBuffer& commandBuffer)
-	{
-		VkDeviceSize offsets[] = { 0 };
-		vkCmdBindVertexBuffers(commandBuffer, 0, 1, &triangleHandle, offsets);
 	}
 
 	void CleanUp()
