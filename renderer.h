@@ -468,11 +468,10 @@ private:
 	}
 
 public:
+	std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
 	void Render()
 	{
-
 		// TODO: Part 2a
-		static std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
 		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 		float elapsedTime = std::chrono::duration<float>(currentTime - startTime).count();
 		float rotationSpeed = 0.1f; // Rotation speed in radians per second
