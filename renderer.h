@@ -90,10 +90,18 @@ public:
 			//-0.5f, -0.5f,
 			//0,   0.5f
 			-0.25, 0.75,
-			0.25, 0.75
-
-	
-			//- 0.25, 0.75,
+			0.25, 0.75,
+			0.25, 0.25,
+			0.75, 0.25,
+			0.75, -0.25,
+			0.25, -0.25,
+			0.25, -0.75,
+			-0.25, -0.75,
+			-0.25, -0.25,
+			-0.75, -0.25,
+			-0.75, 0.25,
+			-0.25, 0.25,			
+			- 0.25, 0.75,
 		};
 		// TODO: Part 1c
 		// TODO: Part 4a
@@ -452,7 +460,7 @@ public:
 		SetUpPipeline(commandBuffer);
 		// TODO: Part 3b
 		// TODO: Part 3d
-		vkCmdDraw(commandBuffer, 4, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
