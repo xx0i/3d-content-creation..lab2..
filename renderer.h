@@ -40,7 +40,15 @@ class Renderer
 	VkPipelineLayout pipelineLayout = nullptr;
 
 	// TODO: Part 2a
+	GW::MATH::GMATRIXF identityMatrix = GW::MATH::GIdentityMatrixF;
+	GW::MATH::GMATRIXF zRotationMatrix;
+	GW::MATH::GMatrix interfaceProxy;
 	// TODO: Part 2b
+	struct shaderVars 
+	{
+		GW::MATH::GMATRIXF worldMatrix; //64 bytes?
+		GW::MATH::GMATRIXF padding;
+	};
 	// TODO: Part 3a
 	// TODO: Part 3c
 	// TODO: Part 4a
@@ -55,6 +63,7 @@ public:
 		UpdateWindowDimensions();
 		InitializeGraphics();
 		BindShutdownCallback();
+		
 	}
 
 private:
@@ -67,6 +76,7 @@ private:
 	void InitializeGraphics()
 	{
 		// TODO: Part 2a
+		interfaceProxy.Create();
 		GetHandlesFromSurface();
 		InitializeVertexBuffer();
 		// TODO: Part 3c 
@@ -441,25 +451,39 @@ private:
 	void CreatePipelineLayout()
 	{
 		// TODO: Part 2c
+		VkPushConstantRange pushConstRange = {};
+		pushConstRange.offset = 0;
+		pushConstRange.size = sizeof(shaderVars);
+		pushConstRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+		
 		// Descriptor pipeline layout
 		VkPipelineLayoutCreateInfo pipeline_layout_create_info = {};
 		pipeline_layout_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipeline_layout_create_info.setLayoutCount = 0;
 		pipeline_layout_create_info.pSetLayouts = VK_NULL_HANDLE;
-		pipeline_layout_create_info.pushConstantRangeCount = 0; // TODO: Part 2c
-		pipeline_layout_create_info.pPushConstantRanges = nullptr; // TODO: Part 2c
+		pipeline_layout_create_info.pushConstantRangeCount = 1; // TODO: Part 2c
+		pipeline_layout_create_info.pPushConstantRanges = &pushConstRange; // TODO: Part 2c
 		vkCreatePipelineLayout(device, &pipeline_layout_create_info,
 			nullptr, &pipelineLayout);
 	}
 
-
 public:
 	void Render()
 	{
+
 		// TODO: Part 2a
+		static std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
+		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+		float elapsedTime = std::chrono::duration<float>(currentTime - startTime).count();
+		
+		interfaceProxy.RotateZGlobalF(identityMatrix, elapsedTime, zRotationMatrix);
+
 		// TODO: Part 2b
+		shaderVars rotation{};
+		rotation.worldMatrix = zRotationMatrix;
+
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
-		SetUpPipeline(commandBuffer);
+		SetUpPipeline(commandBuffer, rotation);
 		// TODO: Part 3b
 		// TODO: Part 3d
 		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
@@ -476,13 +500,14 @@ private:
 		return retval;
 	}
 
-	void SetUpPipeline(const VkCommandBuffer& commandBuffer)
+	void SetUpPipeline(const VkCommandBuffer& commandBuffer, const shaderVars& shaderData)
 	{
 		UpdateWindowDimensions();
 		SetViewport(commandBuffer);
 		SetScissor(commandBuffer);
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline); // TODO: Part 4g
 		// TODO: Part 2d
+		vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(shaderVars), &shaderData);
 		BindVertexBuffers(commandBuffer);
 	}
 
