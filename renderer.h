@@ -506,9 +506,10 @@ public:
 
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipeline(commandBuffer, rotation);
+		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 3b
-		//commandBuffer = GetCurrentCommandBuffer();
-		//SetUpPipelineTriangle(commandBuffer, rotation);
+		commandBuffer = GetCurrentCommandBuffer();
+		SetUpPipelineTriangle(commandBuffer, rotation);
 		// TODO: Part 3d
 		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
