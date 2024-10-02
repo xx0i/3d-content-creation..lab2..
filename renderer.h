@@ -545,7 +545,7 @@ public:
 		
 		// TODO: Part 3d
 		vkCmdBindIndexBuffer(commandBuffer, triangleHandle, 0, VK_INDEX_TYPE_UINT32);
-		vkCmdDraw(commandBuffer, 15, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 30, 1, 0, 0); // TODO: Part 1b, Part 1c
 		// TODO: Part 4g
 	}
 
