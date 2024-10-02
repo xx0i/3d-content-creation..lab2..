@@ -475,8 +475,8 @@ public:
 		// TODO: Part 2a
 		std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
 		float elapsedTime = std::chrono::duration<float>(currentTime - startTime).count();
-		//float rotationSpeed = 0.1f; // Rotation speed in radians per second
-		float radians = elapsedTime /** rotationSpeed*/;
+		float rotationSpeed = 1.0f; // Rotation speed in radians per second
+		float radians = elapsedTime * rotationSpeed;
 		interfaceProxy.RotateZGlobalF(identityMatrix, radians, zRotationMatrix);
 
 		// TODO: Part 2b
