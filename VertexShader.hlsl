@@ -9,5 +9,5 @@ cbuffer shaderVars
 float4 main(float2 inputVertex : POSITION) : SV_POSITION
 {
 	// TODO: Part 2d 
-	return float4(inputVertex, 0, 1);
+    return mul(float4(inputVertex, 0, 1), worldMatrix);
 }
