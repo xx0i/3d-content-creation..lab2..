@@ -60,6 +60,12 @@ class Renderer
 	VkDeviceMemory triangleData = nullptr;
 
 	// TODO: Part 4a
+	struct vertex 	//vertex struct
+	{
+		float x, y;
+		float r, g, b, a;
+	};
+
 	// TODO: Part 4b
 
 	unsigned int windowWidth, windowHeight;
@@ -127,7 +133,19 @@ private:
 			-0.25f, 0.75f
 		};
 		// TODO: Part 4a
-		CreateVertexBuffer(&verts[0], sizeof(verts));
+		vertex verts2[26] = { 0, };
+
+		for (int i = 0; i < 11; i++)
+		{
+			verts2[i].x = verts[i * 2];
+			verts2[i].y = verts[i * 2 + 1];
+		
+			verts2[i].r = rand() / static_cast<float>(RAND_MAX);
+			verts2[i].g = rand() / static_cast<float>(RAND_MAX);
+			verts2[i].b = rand() / static_cast<float>(RAND_MAX);
+			verts2[i].a = rand() / static_cast<float>(RAND_MAX);
+		}
+		CreateVertexBuffer(&verts2[0], sizeof(verts2));
 	}
 
 	void CreateVertexBuffer(const void* data, unsigned int sizeInBytes)
