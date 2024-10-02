@@ -477,7 +477,7 @@ public:
 		float elapsedTime = std::chrono::duration<float>(currentTime - startTime).count();
 		float rotationSpeed = 0.1f; // Rotation speed in radians per second
 		float radians = elapsedTime * rotationSpeed;
-		interfaceProxy.RotateYGlobalF(identityMatrix, rotationSpeed, zRotationMatrix);
+		interfaceProxy.RotateZGlobalF(identityMatrix, rotationSpeed, zRotationMatrix);
 
 		// TODO: Part 2b
 		shaderVars rotation{};
