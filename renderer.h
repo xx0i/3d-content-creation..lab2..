@@ -137,7 +137,7 @@ private:
 		// TODO: Part 4a
 		vertex verts2[26] = { 0, };
 
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 13; i++)
 		{
 			verts2[i].x = verts[i * 2];
 			verts2[i].y = verts[i * 2 + 1];
