@@ -163,7 +163,7 @@ private:
 
 	void InitializeVertexBufferTriangle()
 	{
-		uint16_t triangles[] = {
+		uint32_t triangles[] = {
 			0, 1, 2,
 			0, 2, 11,
 			2, 3, 4,
@@ -623,7 +623,7 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDrawIndexed(commandBuffer, 33, 1, 0, 0, 0);
+		vkCmdDrawIndexed(commandBuffer, 3, 1, 0, 0, 0);
 		// TODO: Part 4g
 	}
 
