@@ -343,10 +343,10 @@ private:
 		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
 		vertex_attribute_descriptions[0].offset = 0;
 
-		vertex_attribute_descriptions[0].binding = 0;
-		vertex_attribute_descriptions[0].location = 1;
-		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-		vertex_attribute_descriptions[0].offset = sizeof(float) * 2;
+		vertex_attribute_descriptions[1].binding = 0;
+		vertex_attribute_descriptions[1].location = 1;
+		vertex_attribute_descriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
+		vertex_attribute_descriptions[1].offset = sizeof(float) * 2;
 
 
 		VkPipelineVertexInputStateCreateInfo input_vertex_info = CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1, vertex_attribute_descriptions.data(), 2);
