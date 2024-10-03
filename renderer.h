@@ -621,6 +621,7 @@ public:
 		rotation.worldMatrix = zRotationMatrix;
 
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
+		BindVertexBuffers(commandBuffer);
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		// TODO: Part 3d
 		vkCmdDrawIndexed(commandBuffer, 30, 1, 0, 0, 0);
