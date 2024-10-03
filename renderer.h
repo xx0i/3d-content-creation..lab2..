@@ -619,11 +619,16 @@ public:
 		// TODO: Part 2b
 		shaderVars rotation{};
 		rotation.worldMatrix = zRotationMatrix;
-		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
-		SetUpPipelineTriangle(commandBuffer, rotation);
 
+		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
+
+		SetUpPipeline(commandBuffer, rotation);
+		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
+
+		SetUpPipelineTriangle(commandBuffer, rotation);
 		// TODO: Part 3d
 		vkCmdDrawIndexed(commandBuffer, 30, 1, 0, 0, 0);
+
 		SetUpPipeline(commandBuffer, rotation);
 		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 	}
