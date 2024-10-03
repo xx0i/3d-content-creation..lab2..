@@ -329,7 +329,7 @@ private:
 		// Create Stage Info for Fragment Shader
 		stage_create_info[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		stage_create_info[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		stage_create_info[1].module = fragmentShader; // TODO: Part 4f, Part 4g
+		stage_create_info[1].module = fragmentShader2; // TODO: Part 4f, Part 4g
 		stage_create_info[1].pName = "main";
 
 
@@ -623,7 +623,7 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDrawIndexed(commandBuffer, 30, 1, 0, 0, 0);
+		vkCmdDrawIndexed(commandBuffer, 32, 1, 0, 0, 0);
 		// TODO: Part 4g
 	}
 
