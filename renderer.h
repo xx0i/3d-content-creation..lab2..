@@ -323,7 +323,7 @@ private:
 		// Create Stage Info for Vertex Shader
 		stage_create_info[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		stage_create_info[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		stage_create_info[0].module = vertexShader; // TODO: Part 4f
+		stage_create_info[0].module = vertexShader2; // TODO: Part 4f
 		stage_create_info[0].pName = "main";
 
 		// Create Stage Info for Fragment Shader
