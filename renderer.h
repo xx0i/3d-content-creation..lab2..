@@ -133,11 +133,9 @@ private:
 			-0.75f, 0.25f,
 			-0.2f, 0.25f,
 			-0.25f, 0.75f,
-			-0.2f, 0.25f,
-			-0.25f, 0.75f
 		};
 		// TODO: Part 4a
-		vertex verts2[30] = { 0, };
+		vertex verts2[26] = { 0, };
 
 		for (int i = 0; i < 11; i++)
 		{
@@ -624,7 +622,7 @@ public:
 
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipeline(commandBuffer, rotation);
-		vkCmdDraw(commandBuffer, 15, 1, 0, 0); // TODO: Part 1b, Part 1c
+		vkCmdDraw(commandBuffer, 13, 1, 0, 0); // TODO: Part 1b, Part 1c
 		
 		// TODO: Part 3b
 		commandBuffer = GetCurrentCommandBuffer();
