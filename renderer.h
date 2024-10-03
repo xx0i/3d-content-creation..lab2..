@@ -168,12 +168,12 @@ private:
 			0, 2, 11,
 			2, 3, 4,
 			2, 4, 5,
-			//8, 5, 6,
-			//8, 6, 7,
-			//10, 11, 8,
-			//10, 8, 9, 
-			//11, 2, 5,
-			//11, 5, 8
+			8, 5, 6,
+			8, 6, 7,
+			10, 11, 8,
+			10, 8, 9, 
+			11, 2, 5,
+			11, 5, 8
 		};
 		// TODO: Part 4a
 		CreateIndexBuffer(&triangles[0], sizeof(triangles));
@@ -323,13 +323,13 @@ private:
 		// Create Stage Info for Vertex Shader
 		stage_create_info[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		stage_create_info[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		stage_create_info[0].module = vertexShader2; // TODO: Part 4f
+		stage_create_info[0].module = vertexShader; // TODO: Part 4f
 		stage_create_info[0].pName = "main";
 
 		// Create Stage Info for Fragment Shader
 		stage_create_info[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		stage_create_info[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		stage_create_info[1].module = fragmentShader2; // TODO: Part 4f, Part 4g
+		stage_create_info[1].module = fragmentShader; // TODO: Part 4f, Part 4g
 		stage_create_info[1].pName = "main";
 
 
