@@ -623,7 +623,7 @@ public:
 		SetUpPipelineTriangle(commandBuffer, rotation);
 		
 		// TODO: Part 3d
-		vkCmdDrawIndexed(commandBuffer, 32, 1, 0, 0, 0);
+		vkCmdDrawIndexed(commandBuffer, 30, 1, 0, 0, 0);
 		// TODO: Part 4g
 	}
 
