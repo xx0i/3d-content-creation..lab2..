@@ -67,6 +67,8 @@ class Renderer
 	};
 
 	// TODO: Part 4b
+	VkShaderModule vertexShader2 = nullptr;
+	VkShaderModule fragmentShader2 = nullptr;
 
 	unsigned int windowWidth, windowHeight;
 public:
@@ -192,12 +194,21 @@ private:
 		shaderc_compiler_t compiler = shaderc_compiler_initialize();
 		shaderc_compile_options_t options = CreateCompileOptions();
 
+		shaderc_compiler_t compiler2 = shaderc_compiler_initialize();
+		shaderc_compile_options_t options2 = CreateCompileOptions();
+
 		CompileVertexShader(compiler, options);
 		CompileFragmentShader(compiler, options);
+
+		CompileVertexShader2(compiler2, options2);
+		CompileFragmentShader2(compiler2, options2);
 
 		// Free runtime shader compiler resources
 		shaderc_compile_options_release(options);
 		shaderc_compiler_release(compiler);
+
+		shaderc_compile_options_release(options2);
+		shaderc_compiler_release(compiler2);
 	}
 
 	shaderc_compile_options_t CreateCompileOptions()
@@ -261,6 +272,50 @@ private:
 		shaderc_result_release(result); // done
 	}
 
+	//part 4b
+	void CompileVertexShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
+	{
+		std::string vertexShaderSource = ReadFileIntoString("../VertexShader 2.hlsl");
+
+		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
+			compiler, vertexShaderSource.c_str(), vertexShaderSource.size(),
+			shaderc_vertex_shader, "main.vert", "main", options);
+
+		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success) // errors?
+		{
+			PrintLabeledDebugString("Vertex Shader 2 Errors:\n", shaderc_result_get_error_message(result));
+			abort();
+			return;
+		}
+
+		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+			(char*)shaderc_result_get_bytes(result), &vertexShader2);
+		shaderc_result_release(result); // done
+	}
+
+	void CompileFragmentShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
+	{
+		std::string fragmentShaderSource = ReadFileIntoString("../FragmentShader2.hlsl");
+
+		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
+			compiler, fragmentShaderSource.c_str(), fragmentShaderSource.length(),
+			shaderc_fragment_shader, "main.frag", "main", options);
+
+		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success) // errors?
+		{
+			PrintLabeledDebugString("Fragment Shader 2 Errors:\n", shaderc_result_get_error_message(result));
+			abort();
+			return;
+		}
+
+		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+			(char*)shaderc_result_get_bytes(result), &fragmentShader2);
+		shaderc_result_release(result); // done
+	}
+
+
+
+
 	void InitializeGraphicsPipeline()
 	{
 		VkPipelineShaderStageCreateInfo stage_create_info[2] = {};
@@ -268,13 +323,13 @@ private:
 		// Create Stage Info for Vertex Shader
 		stage_create_info[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		stage_create_info[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		stage_create_info[0].module = vertexShader; // TODO: Part 4f
+		stage_create_info[0].module = vertexShader2; // TODO: Part 4f
 		stage_create_info[0].pName = "main";
 
 		// Create Stage Info for Fragment Shader
 		stage_create_info[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		stage_create_info[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		stage_create_info[1].module = fragmentShader; // TODO: Part 4f, Part 4g
+		stage_create_info[1].module = fragmentShader2; // TODO: Part 4f, Part 4g
 		stage_create_info[1].pName = "main";
 
 
@@ -282,13 +337,19 @@ private:
 		VkVertexInputBindingDescription vertex_binding_description = CreateVkVertexInputBindingDescription();
 
 
-		VkVertexInputAttributeDescription vertex_attribute_descriptions[1]; //TODO: Part 4f
+		VkVertexInputAttributeDescription vertex_attribute_descriptions[2]; //TODO: Part 4f
 		vertex_attribute_descriptions[0].binding = 0;
 		vertex_attribute_descriptions[0].location = 0;
 		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
 		vertex_attribute_descriptions[0].offset = 0;
 
-		VkPipelineVertexInputStateCreateInfo input_vertex_info = CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1, vertex_attribute_descriptions, 1);
+		vertex_attribute_descriptions[0].binding = 0;
+		vertex_attribute_descriptions[0].location = 1;
+		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;
+		vertex_attribute_descriptions[0].offset = sizeof(float) * 2;
+
+
+		VkPipelineVertexInputStateCreateInfo input_vertex_info = CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1, vertex_attribute_descriptions, 2);
 
 		VkViewport viewport = CreateViewportFromWindowDimensions();
 		VkRect2D scissor = CreateScissorFromWindowDimensions();
@@ -366,7 +427,7 @@ private:
 		VkVertexInputBindingDescription retval = {};
 
 		retval.binding = 0;
-		retval.stride = sizeof(float) * 2; // TODO: Part 4f 
+		retval.stride = sizeof(vertex); // TODO: Part 4f 
 		retval.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
 		return retval;
@@ -627,11 +688,16 @@ private:
 		vkDestroyShaderModule(device, fragmentShader, nullptr);
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 		vkDestroyPipeline(device, pipeline, nullptr);
+		
 		// TODO: Part 3a
 		vkDestroyPipeline(device, trianglePipeline, nullptr);
+		
 		// TODO: Part 3c
 		vkDestroyBuffer(device, triangleHandle, nullptr);
 		vkFreeMemory(device, triangleData, nullptr);
+		
 		// TODO: Part 4b
+		vkDestroyShaderModule(device, vertexShader2, nullptr);
+		vkDestroyShaderModule(device, fragmentShader2, nullptr);
 	}
 };
