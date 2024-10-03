@@ -163,7 +163,7 @@ private:
 
 	void InitializeVertexBufferTriangle()
 	{
-		uint32_t triangles[] = {
+		uint16_t triangles[] = {
 			0, 1, 2,
 			0, 2, 11,
 			2, 3, 4,
