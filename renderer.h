@@ -446,7 +446,7 @@ private:
 		VkPipelineVertexInputStateCreateInfo retval = {};
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		retval.vertexBindingDescriptionCount = bindingCount; // TODO: Part 4f
+		retval.vertexBindingDescriptionCount = bindingCount * 2; // TODO: Part 4f
 		retval.pVertexBindingDescriptions = bindingDescriptions;
 		retval.vertexAttributeDescriptionCount = attributeCount;
 		retval.pVertexAttributeDescriptions = attributeDescriptions;
