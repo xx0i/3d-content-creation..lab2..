@@ -131,7 +131,7 @@ private:
 			-0.25f, -0.25f,
 			-0.75f, -0.25f,
 			-0.75f, 0.25f,
-			-0.25f, 0.25f,
+			-1.0f, 0.25f,
 			-0.25f, 0.75f
 		};
 		// TODO: Part 4a
@@ -532,7 +532,7 @@ private:
 		VkPipelineDepthStencilStateCreateInfo retval = {};
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
-		retval.depthTestEnable = VK_FALSE; // TODO: Part 4g
+		retval.depthTestEnable = VK_TRUE; // TODO: Part 4g
 		retval.depthWriteEnable = VK_TRUE;
 		retval.depthCompareOp = VK_COMPARE_OP_LESS;
 		retval.depthBoundsTestEnable = VK_FALSE;
