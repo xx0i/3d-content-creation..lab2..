@@ -1,3 +1,11 @@
+// TODO: Part 2b 
+[[vk::push_constant]]
+cbuffer shaderVars
+{
+    matrix worldMatrix;
+    matrix padding;
+};
+
 struct VERTEX
 {
     float2 pos : POSITION;
@@ -8,15 +16,6 @@ struct VERTEX_OUTPUT
 {
     float4 pos : SV_POSITION;
     float4 colour : COLOR;
-};
-
-
-// TODO: Part 2b 
-[[vk::push_constant]]
-cbuffer shaderVars
-{
-    matrix worldMatrix;
-    matrix padding;
 };
 
 // an ultra simple hlsl vertex shader
