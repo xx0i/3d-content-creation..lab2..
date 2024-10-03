@@ -42,7 +42,7 @@ int main()
 			"VK_LAYER_KHRONOS_validation", // standard validation layer
 			//"VK_LAYER_RENDERDOC_Capture", //for render doc
 		};
-		if (+vulkan.Create(	win, GW::GRAPHICS::DEPTH_BUFFER_SUPPORT, 
+		if (+vulkan.Create(	win, GW::GRAPHICS::DEPTH_BUFFER_SUPPORT | GW::GRAPHICS::MSAA_4X_SUPPORT,
 							sizeof(debugLayers)/sizeof(debugLayers[0]),
 							debugLayers, 0, nullptr, 0, nullptr, false))
 #else

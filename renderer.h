@@ -518,7 +518,7 @@ private:
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		retval.sampleShadingEnable = VK_FALSE;
-		retval.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+		retval.rasterizationSamples = VK_SAMPLE_COUNT_4_BIT;
 		retval.minSampleShading = 1.0f;
 		retval.pSampleMask = VK_NULL_HANDLE;
 		retval.alphaToCoverageEnable = VK_FALSE;
