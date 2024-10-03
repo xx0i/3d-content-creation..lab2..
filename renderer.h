@@ -337,7 +337,7 @@ private:
 		VkVertexInputBindingDescription vertex_binding_description = CreateVkVertexInputBindingDescription();
 
 
-		VkVertexInputAttributeDescription vertex_attribute_descriptions[2]; //TODO: Part 4f
+		std::array<VkVertexInputAttributeDescription, 2> vertex_attribute_descriptions{}; //TODO: Part 4f
 		vertex_attribute_descriptions[0].binding = 0;
 		vertex_attribute_descriptions[0].location = 0;
 		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
@@ -349,7 +349,7 @@ private:
 		vertex_attribute_descriptions[0].offset = sizeof(float) * 2;
 
 
-		VkPipelineVertexInputStateCreateInfo input_vertex_info = CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1, vertex_attribute_descriptions, 2);
+		VkPipelineVertexInputStateCreateInfo input_vertex_info = CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1, vertex_attribute_descriptions.data(), 2);
 
 		VkViewport viewport = CreateViewportFromWindowDimensions();
 		VkRect2D scissor = CreateScissorFromWindowDimensions();
