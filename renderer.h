@@ -349,7 +349,8 @@ private:
 		vertex_attribute_descriptions[1].offset = sizeof(float) * 2;
 
 
-		VkPipelineVertexInputStateCreateInfo input_vertex_info = CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1, vertex_attribute_descriptions.data(), 2);
+		VkPipelineVertexInputStateCreateInfo input_vertex_info = 
+			CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1, vertex_attribute_descriptions.data(), vertex_attribute_descriptions.size());
 
 		VkViewport viewport = CreateViewportFromWindowDimensions();
 		VkRect2D scissor = CreateScissorFromWindowDimensions();
