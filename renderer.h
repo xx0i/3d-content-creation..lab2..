@@ -132,10 +132,12 @@ private:
 			-0.75f, -0.25f,
 			-0.75f, 0.25f,
 			-0.2f, 0.25f,
+			-0.25f, 0.75f,
+			-0.2f, 0.25f,
 			-0.25f, 0.75f
 		};
 		// TODO: Part 4a
-		vertex verts2[26] = { 0, };
+		vertex verts2[30] = { 0, };
 
 		for (int i = 0; i < 11; i++)
 		{
